@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drama Filed - تحميل التطبيق</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #060709;
+            --card-bg: #11131a;
+            --card-border: #1d202b;
+            --primary: #ff0055;
+            --text: #ffffff;
+            --text-muted: #7e8494;
+            --accent-yellow: #ffc107;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            margin-bottom: 40px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-logo {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(45deg, var(--primary), #ff5500);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .back-btn {
+            background-color: #161922;
+            color: var(--text);
+            border: 1px solid var(--card-border);
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .main-content {
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+        }
+
+        .version-badge {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--accent-yellow);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            display: inline-flex;
+        }
+
+        .main-title {
+            font-size: 26px;
+            font-weight: 900;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .highlight-text {
+            color: var(--primary);
+            display: block;
+        }
+
+        .description {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .download-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: 0.2s;
+        }
+
+        .btn-apk {
+            background: linear-gradient(90deg, #ff0055, #e6004c);
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 0, 85, 0.3);
+        }
+
+        .btn-apk:hover {
+            box-shadow: 0 8px 30px rgba(255, 0, 85, 0.5);
+        }
+
+        .btn-disabled {
+            background-color: #11131a;
+            color: #4a4f61;
+            border: 1px solid #1d202b;
+            cursor: not-allowed;
+        }
+
+        .btn-subtitle {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+            display: block;
+            font-weight: normal;
+        }
+
+        .btn-disabled .btn-subtitle {
+            color: #4a4f61;
+        }
+
+        .btn-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="/" class="back-btn">➔ العودة للموقع</a>
+        <div class="brand">
+            <span class="brand-name">DRAMA FILED</span>
+            <div class="brand-logo">D</div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="version-badge">★ الإصدار الرسمي V1.0</div>
+        
+        <h1 class="main-title">
+            تابع أقوى المباريات مع تطبيق
+            <span class="highlight-text">دراما فايلد VIP</span>
+        </h1>
+        
+        <p class="description">
+            تجربة سينمائية خالية من التقطيع، جودة تصل إلى 1080p بمعدل 60 إطار في الثانية، ودردشة تفاعلية مباشرة مع آلاف المشاهدين. متوفر الآن لأجهزة الأندرويد.
+        </p>
+
+        <div class="download-container">
+            <a href="/static/drama-filed.apk" class="btn btn-apk" download>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm1 10V7h-2v5H8l4 4 4-4h-3z"/></svg>
+                <div class="btn-text-wrapper">
+                    <span class="btn-subtitle">تحميل مباشر للنسخة</span>
+                    <span>Android (APK)</span>
+                </div>
+            </a>
+
+            <a href="#" class="btn btn-disabled" onclick="return false;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 2.164C3.23 2.54 3 3.125 3 3.875v16.25c0 .75.23 1.335.609 1.711l.071.064L12.914 12v-.195L3.68 2.1l-.071.064zm13.12 9.836l3.433-1.962c.962-.55 1.554-1.124 1.554-2.038s-.592-1.488-1.554-2.038L16.73 3.996l-3.818 3.818L16.73 12zm-3.818-3.818l3.818-3.818L3.921 2.219C3.921 2.219 12.912 11.805 12.912 11.805z"/></svg>
+                <div class="btn-text-wrapper">
+                    <span class="btn-subtitle">قريباً جداً على</span>
+                    <span>Google Play</span>
+                </div>
+            </a>
+        </div>
+    </main>
+
+</body>
+</html>

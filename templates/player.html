@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drama Filed — بوابة العرض</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+    <link href="https://unpkg.com/videojs-contrib-quality-levels@4.0.0/dist/videojs-contrib-quality-levels.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #060709;
+            --card-bg: #11131a;
+            --card-border: #1d202b;
+            --primary: #ff0055;
+            --text: #ffffff;
+            --text-muted: #7e8494;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .dashboard {
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 20px;
+        }
+        
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .title {
+            font-size: 22px;
+            font-weight: 900;
+        }
+        
+        .back-btn {
+            background-color: #161922;
+            color: var(--text);
+            border: 1px solid var(--card-border);
+            padding: 6px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .player-wrapper {
+            width: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            margin-bottom: 20px;
+            background: #000;
+        }
+        
+        .video-js {
+            width: 100%;
+            height: 270px;
+        }
+        
+        .video-js .vjs-big-play-button {
+            background: linear-gradient(45deg, var(--primary), #ff4000) !important;
+            border: none !important;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            line-height: 55px;
+            margin-left: -27.5px;
+            margin-top: -27.5px;
+        }
+        
+        .video-js .vjs-control-bar {
+            background-color: rgba(11, 13, 19, 0.95) !important;
+        }
+        
+        .video-js .vjs-play-progress, .video-js .vjs-volume-level {
+            background-color: var(--primary) !important;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #161922 0%, #0b0c10 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .info-card .value {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 2px;
+        }
+        
+        .info-card .label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+    <div class="header-bar">
+        <h1 class="title">Drama Filed</h1>
+        <a href="/" class="back-btn">➔ جدول المباريات</a>
+    </div>
+    
+    <div class="player-wrapper">
+        <video id="hex-player" class="video-js vjs-default-skin" controls preload="auto" playsinline>
+            <p class="vjs-no-js">يرجى تحديث المتصفح.</p>
+        </video>
+    </div>
+
+    <div class="info-card">
+        <div class="value" id="quality-val">تلقائية</div>
+        <div class="label">جودة العرض الحالية للبث الحي</div>
+    </div>
+</div>
+
+<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+<script src="https://unpkg.com/@silvermine/videojs-airplay/dist/silvermine-videojs-airplay.min.js"></script>
+<script src="https://unpkg.com/@silvermine/videojs-chromecast/dist/silvermine-videojs-chromecast.min.js"></script>
+<script src="https://unpkg.com/videojs-contrib-quality-levels@4.0.0/dist/videojs-contrib-quality-levels.min.js"></script>
+<script src="https://unpkg.com/videojs-hls-quality-selector@2.0.0/dist/videojs-hls-quality-selector.min.js"></script>
+
+<script>
+    var secureToken = "{{ token }}";
+
+    var player = videojs('hex-player', {
+        html5: {
+            vhs: {
+                overrideNative: true,
+                liveDelay: 6,           // مهلة لمنع الـ Stuttering
+                maxBufferLength: 10,
+                backBufferLength: 4
+            }
+        },
+        plugins: { airPlay: {}, chromecast: {} }
+    });
+
+    // تحميل البث المباشر المحمي بالتوكن تلقائياً عند فتح الصفحة
+    player.src({
+        src: "/live.m3u8?token=" + secureToken,
+        type: 'application/x-mpegURL'
+    });
+
+    player.hlsQualitySelector({ displayCurrentQuality: true });
+
+    player.on('loadedmetadata', function() {
+        var vhs = player.tech({ IWillNotUseThisInPlugins: true }).vhs;
+        if (vhs && vhs.playlists) {
+            player.on('mediachange', function() {
+                var currentPlaylist = vhs.playlists.media();
+                if (currentPlaylist && currentPlaylist.attributes && currentPlaylist.attributes.RESOLUTION) {
+                    var height = currentPlaylist.attributes.RESOLUTION.height;
+                    document.getElementById('quality-val').innerText = height + "p";
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

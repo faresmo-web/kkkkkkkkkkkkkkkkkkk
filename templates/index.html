@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drama Filed - البث المباشر</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #060709;
+            --card-bg: #11131a;
+            --card-border: #1d202b;
+            --primary: #ff0055;
+            --accent-yellow: #ffc107;
+            --text: #ffffff;
+            --text-muted: #7e8494;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+        }
+
+        /* الهيدر */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            margin-bottom: 15px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-logo {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(45deg, var(--primary), #ff5500);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .app-btn {
+            background-color: var(--accent-yellow);
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* شريط التنبيه */
+        .alert-ticker {
+            background-color: #0e1017;
+            border: 1px solid #1c1f2e;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            margin-bottom: 15px;
+            padding: 5px 10px;
+        }
+
+        .alert-title {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 12px;
+            white-space: nowrap;
+            padding-left: 10px;
+            border-left: 1px solid #2c3044;
+        }
+
+        .ticker-text {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 10px;
+            font-size: 12px;
+            color: #d1d5db;
+            animation: marquee 15s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translate3d(100%, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        /* البانر الرئيسي */
+        .hero-banner {
+            background: linear-gradient(135deg, #161922 0%, #0b0c10 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .live-badge {
+            background-color: rgba(255, 0, 85, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(255, 0, 85, 0.2);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .banner-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .banner-text h2 {
+            font-size: 20px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .banner-text p {
+            color: var(--text-muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* جدول المباريات */
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .match-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1c1f2e;
+            padding-bottom: 10px;
+        }
+
+        .tournament-name {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .match-status {
+            background-color: #1a1d26;
+            color: var(--accent-yellow);
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .match-teams-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 30%;
+        }
+
+        .team-flag {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #222635;
+        }
+
+        .team-name {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .match-time-info {
+            text-align: center;
+            width: 40%;
+        }
+
+        .time-box {
+            background-color: #181b24;
+            border: 1px solid #242937;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .vs-badge {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin: 8px 0;
+            display: block;
+        }
+
+        /* حاوية السيرفرات كأزرار انتقال */
+        .servers-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .server-link {
+            background-color: #161922;
+            border: 1px solid #222635;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            text-align: center;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .server-link:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px rgba(255, 0, 85, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <a href="/download" class="app-btn">📱 التطبيق</a>
+            <div class="brand">
+                <span class="brand-name">DRAMA FILED</span>
+                <div class="brand-logo">D</div>
+            </div>
+        </header>
+
+        <div class="alert-ticker">
+            <span class="alert-title">⚡ تنبيه هام :</span>
+            <div style="overflow: hidden; width: 100%;">
+                <span class="ticker-text">سيرفرات وروابط البث المباشر للمباريات تفتح قبل انطلاق صافرة المباراة بـ 30 دقيقة. نتمنى لكم مشاهدة ممتعة!</span>
+            </div>
+        </div>
+
+        <div class="hero-banner">
+            <div class="live-badge"><div class="live-dot"></div> تغطية حية</div>
+            <div class="banner-content">
+                <div class="banner-text">
+                    <h2>بث مباشر حصري<br>كأس العالم 2026</h2>
+                    <p>شاهد المباريات مباشرة بجودات متعددة وتجربة متوافقة مع الهاتف والتلفاز والكمبيوتر.</p>
+                </div>
+                <div style="font-size: 40px;">🏆</div>
+            </div>
+        </div>
+
+        <div class="section-title">⚽ جدول المباريات والبث</div>
+
+        <div id="dynamic-matches"></div>
+    </div>
+
+    <script>
+        // جلب الماتشات من السيرفر وبناء الأزرار بحال ستايل السكرينات تماما
+        fetch('/matches')
+            .then(response => response.json())
+            .then(matches => {
+                let html = '';
+                matches.forEach(match => {
+                    let serversHtml = '';
+                    match.servers.forEach(server => {
+                        serversHtml += `
+                            <a href="${server.url}" class="server-link">
+                                📺 ${server.name}
+                            </a>
+                        `;
+                    });
+
+                    html += `
+                        <div class="match-card">
+                            <div class="match-header">
+                                <span class="tournament-name">🏆 ${match.title}</span>
+                                <span class="match-status">🕒 ${match.time}</span>
+                            </div>
+                            <div class="match-teams-row">
+                                <div class="team">
+                                    <img class="team-flag" src="${match.team1_logo}" alt="${match.team1}">
+                                    <span class="team-name">${match.team1}</span>
+                                </div>
+                                <div class="match-time-info">
+                                    <div class="time-box">22:00</div>
+                                    <span class="vs-badge">VS</span>
+                                </div>
+                                <div class="team">
+                                    <img class="team-flag" src="${match.team2_logo}" alt="${match.team2}">
+                                    <span class="team-name">${match.team2}</span>
+                                </div>
+                            </div>
+                            <div class="servers-container">
+                                ${serversHtml}
+                            </div>
+                        </div>
+                    `;
+                });
+                document.getElementById('dynamic-matches').innerHTML = html;
+            });
+    </script>
+</body>
+</html>
