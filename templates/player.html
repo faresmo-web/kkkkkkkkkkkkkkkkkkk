@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
     <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-    <link href="https://unpkg.com/videojs-contrib-quality-levels@4.0.0/dist/videojs-contrib-quality-levels.css" rel="stylesheet">
 
     <style>
         :root {
@@ -140,11 +139,17 @@
 <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 <script src="https://unpkg.com/@silvermine/videojs-airplay/dist/silvermine-videojs-airplay.min.js"></script>
 <script src="https://unpkg.com/@silvermine/videojs-chromecast/dist/silvermine-videojs-chromecast.min.js"></script>
-<script src="https://unpkg.com/videojs-contrib-quality-levels@4.0.0/dist/videojs-contrib-quality-levels.min.js"></script>
 <script src="https://unpkg.com/videojs-hls-quality-selector@2.0.0/dist/videojs-hls-quality-selector.min.js"></script>
 
 <script>
     var secureToken = "{{ token }}";
+    // stream_url comes from Flask: either a local path or a full external URL
+    var streamUrl = "{{ stream_url }}";
+
+    // If no external stream was passed, fall back to the local secured stream
+    if (!streamUrl || streamUrl === 'None') {
+        streamUrl = "/live.m3u8?token=" + secureToken;
+    }
 
     var player = videojs('hex-player', {
         html5: {
@@ -158,9 +163,9 @@
         plugins: { airPlay: {}, chromecast: {} }
     });
 
-    // تحميل البث المباشر المحمي بالتوكن تلقائياً عند فتح الصفحة
+    // تحميل البث المباشر (محلي أو خارجي) حسب السيرفر المختار
     player.src({
-        src: "/live.m3u8?token=" + secureToken,
+        src: streamUrl,
         type: 'application/x-mpegURL'
     });
 

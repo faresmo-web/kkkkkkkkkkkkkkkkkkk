@@ -5,6 +5,7 @@ import hashlib
 import subprocess
 import os
 import shutil
+from urllib.parse import quote
 
 app = Flask(__name__)
 
@@ -150,11 +151,11 @@ def get_matches():
             "team2_logo": "https://imgs.ysscores.com/teams/128/2961763078000.png",
             "time": "شغال الآن",
             
-            # الروابط دابا كتديك لصفحة الـ watch وكتصيفط السيرفر مع التوكن
+            # URL-encode the stream path so the inner ?token= doesn't break /watch?stream=
             "servers": [
-                {"name": "سيرفر 1 - جودة عالية 1080p", "url": f"/watch?stream={local_stream_1080p}"},
-                {"name": "سيرفر 2 - جودة متوسطة 720p", "url": f"/watch?stream={local_stream_720p}"},
-                {"name": "سيرفر 3 - احتياطي خارجي", "url": "/watch?stream=https://buzcdn.com/live/master.m3u8"}
+                {"name": "سيرفر 1 - جودة عالية 1080p", "url": f"/watch?stream={quote(local_stream_1080p, safe='')}"},
+                {"name": "سيرفر 2 - جودة متوسطة 720p", "url": f"/watch?stream={quote(local_stream_720p, safe='')}"},
+                {"name": "سيرفر 3 - احتياطي خارجي", "url": f"/watch?stream={quote('https://buzcdn.com/live/master.m3u8', safe='')}"}
             ]
         }
     ])
